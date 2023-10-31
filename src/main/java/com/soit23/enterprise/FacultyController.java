@@ -1,6 +1,7 @@
 package com.soit23.enterprise;
 
-import com.soit23.enterprise.model.Faculty;
+import com.soit23.enterprise.entitiy.Faculty;
+import com.soit23.enterprise.service.FacultyService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,37 +15,24 @@ import java.util.List;
 @RequestMapping("/Faculties")
 public class FacultyController {
 
+    public FacultyService facultyService;
+    public FacultyController(FacultyService theFacultyService){
+        facultyService = theFacultyService;
 
-    //Upload Faculty Info
-    private List<Faculty> theFaculties;
+
+    }
 
 
-    //Mapping for "/List"
+    //Mapping for list
     @GetMapping("/list")
-    public String listFaculties(Model theModel) {
-
+    public String listFaculties(Model theModel){
+        //Retrieve faculties from the Database
+        List<Faculty> theFaculties = facultyService.findAll();
 
         //Add Faculties to the Spring Model
         theModel.addAttribute("faculties", theFaculties);
-        return "list-faculties";
+                return "List-faculties";
+
     }
 
-    @PostConstruct
-    private void loadData() {
-
-        //Create Faculties
-        Faculty fac1 = new Faculty(1, "Kelly", "Miller", "Assistant-Professor", "Kelly@uc.edu");
-        Faculty fac2 = new Faculty(2, "Robert", "Lee", "Instructor-Educator", "Robert@uc.edu");
-        Faculty fac3 = new Faculty(3, "Laura", "West", "Adjunct-Professor", "Laura@uc.edu");
-
-        //Create our List
-        theFaculties = new ArrayList<>();
-
-
-
-        //Add to our List
-        theFaculties.add(fac1);
-        theFaculties.add(fac2);
-        theFaculties.add(fac3);
-    }
 }
