@@ -20,21 +20,21 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public List<Faculty> findAll() {
-        return facultyRepository.findAll();
+        return facultyRepository.findAllByOrderByLastNameAsc();
     }
 
     @Override
     public Faculty findById(int theId) {
-        return null;
+        return facultyRepository.findById(theId).get();
     }
 
     @Override
     public void save(Faculty theFaculty) {
-
+        facultyRepository.save(theFaculty);
     }
 
     @Override
     public void deleteById(int theId) {
-
+        deleteById(theId);
     }
 }
